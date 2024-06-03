@@ -36,7 +36,7 @@ const login = asyncMiddleware(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
       genToken(res, user._id);
-      res.status(201).json({
+      res.json({
         _id: user._id,
         username: user.username,
         email: user.email,
@@ -49,14 +49,14 @@ const login = asyncMiddleware(async (req, res) => {
     }
 });
 
-// const logoutCurrentUser = asyncMiddleware(async (req, res) => {
-//   res.cookie("jwt", "", {
-//     httyOnly: true,
-//     expires: new Date(0),
-//   });
+const logoutCurrentUser = asyncMiddleware(async (req, res) => {
+  res.cookie("jwt", "", {
+    httyOnly: true,
+    expires: new Date(0),
+  });
 
-//   res.status(200).json({ message: "Logged out successfully" });
-// });
+  res.status(200).json({ message: "Logged out successfully" });
+});
 
 const getUsers = asyncMiddleware(async (req, res) => {
   const users = await User.find({});
@@ -156,7 +156,7 @@ const updateUserById = asyncMiddleware(async (req, res) => {
 export {
   makeUser,
   login,
-//   logoutCurrentUser,
+  logoutCurrentUser,
   getUsers,
   getCurrentUserProfile,
   updateCurrentUserProfile,

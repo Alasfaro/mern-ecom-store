@@ -2,7 +2,7 @@ import express from "express";
 import {
   makeUser,
   login,
-  // logoutCurrentUser,
+  logoutCurrentUser,
   getUsers,
   getCurrentUserProfile,
   updateCurrentUserProfile,
@@ -21,14 +21,13 @@ router
   .get(authenticate, authorizeAdmin, getUsers);
 
 router.post("/auth", login);
-// router.post("/logout", logoutCurrentUser);
+router.post("/logout", logoutCurrentUser);
 
 router
   .route("/profile")
   .get(authenticate, getCurrentUserProfile)
   .put(authenticate, updateCurrentUserProfile);
 
-// ADMIN ROUTES 👇
 router
   .route("/:id")
   .delete(authenticate, authorizeAdmin, deleteUserById)
